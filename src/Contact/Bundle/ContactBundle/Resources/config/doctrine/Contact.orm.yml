@@ -1,7 +1,7 @@
 Contact\Bundle\ContactBundle\Entity\Contact:
     type: entity
     table: contact
-    repositoryClass: Contact\Bundle\ContactBundle\Repository\Contact
+    # repositoryClass: Contact\Bundle\ContactBundle\Repository\Contact
     id:
         id:
             type: integer
@@ -18,8 +18,15 @@ Contact\Bundle\ContactBundle\Entity\Contact:
         middleNames:
             type: string
             length: 255
+            nullable: TRUE
         dateAdded:
             type: datetime
+            nullable: TRUE
         favourite:
             type: boolean
-    lifecycleCallbacks: {  }
+    lifecycleCallbacks:
+        prePersist: [setDateAddedToNow]
+    oneToMany:
+        addresses:
+            targetEntity: ContactAddress
+            mappedBy: contact

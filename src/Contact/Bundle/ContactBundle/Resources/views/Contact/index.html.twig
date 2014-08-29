@@ -1,0 +1,23 @@
+{% extends '::base.html.twig'%}
+
+{% block title %}{{ parent()}} - all contacts{% endblock %}
+
+{% block body %}
+    <h1>Your contacts</h1>
+    {% for contact in contacts %}
+    <div class="row contact-list--contact">
+        <div class="row">
+            <div class="col-md-10">
+                <i class="fa fa-user contact-symbol"></i>
+                <a href="{{ path('contact_contact_show', {id: contact.id}) }}" class="contact-name">
+                    {{ contact.firstName }} {% if contact.middleNames %}{{ contact.middleNames }} {% endif %}{{ contact.surname }}
+                </a>
+            </div>
+            <div class="col-md-2 contact-list--button-wrapper">
+                <button type="button" class="btn btn-danger btn-sm">Delete&nbsp;<i class="fa fa-times"></i></button>
+                <button type="button" class="btn btn-default btn-sm">Edit&nbsp;<i class="fa fa-pencil"></i></button>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+{% endblock %}

@@ -35,7 +35,17 @@ class Contact implements ContactInterface
     /**
      * @var boolean
      */
-    protected $favourite;
+    protected $favourite = false;
+
+    protected $addresses;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->addresses = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
 
     /**
@@ -131,6 +141,17 @@ class Contact implements ContactInterface
     }
 
     /**
+     * Set dateAdded to current datetime
+     *
+     * @param \DateTime $dateAdded
+     * @return Contact
+     */
+    public function setDateAddedToNow()
+    {
+        $this->dateAdded = new \DateTime();
+    }
+
+    /**
      * Get dateAdded
      *
      * @return \DateTime 
@@ -139,6 +160,40 @@ class Contact implements ContactInterface
     {
         return $this->dateAdded;
     }
+
+    /**
+     * Add addresses
+     *
+     * @param \Contact\Bundle\ContactBundle\Entity\ContactAddress $addresses
+     * @return Contact
+     */
+    public function addAddress(\Contact\Bundle\ContactBundle\Entity\ContactAddress $addresses)
+    {
+        $this->addresses[] = $addresses;
+
+        return $this;
+    }
+
+    /**
+     * Remove addresses
+     *
+     * @param \Contact\Bundle\ContactBundle\Entity\ContactAddress $addresses
+     */
+    public function removeAddress(\Contact\Bundle\ContactBundle\Entity\ContactAddress $addresses)
+    {
+        $this->addresses->removeElement($addresses);
+    }
+
+    /**
+     * Get addresses
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getAddresses()
+    {
+        return $this->addresses;
+    }
+
 
     /**
      * Set favourite

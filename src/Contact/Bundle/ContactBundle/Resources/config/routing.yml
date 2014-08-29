@@ -1,3 +1,11 @@
 contact_contact_homepage:
-    path:     /contact/{name}
-    defaults: { _controller: ContactContactBundle:Default:index }
+    path:     /contact
+    defaults: { _controller: ContactContactBundle:Contact:index }
+contact_contact_show:
+    path:     /contact/{id}
+    defaults: { _controller: ContactContactBundle:Contact:show }
+    requirements:
+        id: \d+
+contact_contact_create:
+    path:     /contact/new
+    defaults: { _controller: ContactContactBundle:Contact:create }

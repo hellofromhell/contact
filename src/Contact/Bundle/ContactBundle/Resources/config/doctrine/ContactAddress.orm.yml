@@ -1,0 +1,40 @@
+Contact\Bundle\ContactBundle\Entity\ContactAddress:
+    type: entity
+    table: contact_address
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        title:
+            type: string
+            length: 255
+        lineOne:
+            type: string
+            length: 255
+        lineTwo:
+            type: string
+            length: 255
+            nullable: TRUE
+        city:
+            type: string
+            length: 255
+        county:
+            type: string
+            length: 255
+        postCode:
+            type: string
+            length: 255
+        dateAdded:
+            type: datetime
+    lifecycleCallbacks:
+        prePersist: [setDateAddedToNow]
+    manyToOne:
+        contact:
+            targetEntity: Contact
+            inversedBy: addresses
+            joinColumn:
+                name: contact_id
+                referencedColumnName: id

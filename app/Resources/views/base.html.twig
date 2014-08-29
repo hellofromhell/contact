@@ -6,6 +6,7 @@
         {% block stylesheets %}
             {% stylesheets
                 'assets/bootstrap/dist/css/bootstrap.min.css'
+                'assets/css/styles.css'
             %}
             <link rel="stylesheet" href="{{ asset_url }}">
             {% endstylesheets %}
@@ -14,10 +15,17 @@
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
-        <header>
-            Nav bar
-        </header>
-        {% block body %}{% endblock %}
-        {% block footjavascripts %}{% endblock %}
+        <div class="container">
+            <header>Nav bar</header>
+            {% block body %}{% endblock %}
+            <footer>Footer</footer>
+        </div>
+        {% block footjavascripts %}
+            {% javascripts
+                'assets/jquery/dist/jquery.min.js'
+            %}
+            <script src="{{ asset_url }}"></script>
+            {% endjavascripts %}
+        {% endblock %}
     </body>
 </html>
