@@ -1,0 +1,3 @@
+contact_contact_homepage:
+    path:     /contact/{name}
+    defaults: { _controller: ContactContactBundle:Default:index }

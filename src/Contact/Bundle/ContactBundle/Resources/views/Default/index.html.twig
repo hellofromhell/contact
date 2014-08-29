@@ -1,0 +1,22 @@
+{% extends '::base.html.twig'%}
+
+{% block title %}{{ parent() ~ ' - ' ~ name }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block footjavascripts %}
+    {{ parent() }}
+
+    {% javascripts
+        'assets/jquery/dist/jquery.min.js'
+    %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    
+{% endblock %}
+
+{% block body %}
+    <h1><i class="fa fa-user"></i> Contact page for {{ name }}!</h1>
+{% endblock %}

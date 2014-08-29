@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}Contact Manager{% endblock %}</title>
+        {% block stylesheets %}
+            {% stylesheets
+                'assets/bootstrap/dist/css/bootstrap.min.css'
+            %}
+            <link rel="stylesheet" href="{{ asset_url }}">
+            {% endstylesheets %}
+            <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+        {% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    </head>
+    <body>
+        <header>
+            Nav bar
+        </header>
+        {% block body %}{% endblock %}
+        {% block footjavascripts %}{% endblock %}
+    </body>
+</html>
