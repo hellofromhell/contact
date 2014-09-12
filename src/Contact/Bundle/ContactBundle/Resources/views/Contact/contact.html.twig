@@ -17,26 +17,40 @@
     
 {% endblock %}
 
+{% block breadcrumb %}
+    <a href="{{ path('contact_contact_homepage') }}"><span class="back-link"><i class="fa fa-angle-left"></i> back to contact list</span></a>
+{% endblock %}
+
 {% block body %}
     <div class="single-contact">
-            <h1 class="contact-name">{{ contact.firstName }} {% if contact.middleNames %}&lsquo;{{ contact.middleNames }}&rsquo; {% endif %}{{ contact.surname }}</h1>
-            <i class="fa fa-star{% if not contact.favourite %}-o{% endif %} favourite h1"></i>
-        <p><em>Added: {{ contact.dateAdded|date("d/m/Y") }}</em></p>
-        {% for address in contact.addresses %}
-            <div class="row address">
-                <div class="col-md-2">
+        <h1 class="contact-name">{{ contact.firstName }} {% if contact.middleNames %}&lsquo;{{ contact.middleNames }}&rsquo; {% endif %}{{ contact.surname }}</h1>
+        <i class="fa fa-star{% if not contact.favourite %}-o{% endif %} favourite h1"></i>
+        <div class="primary-inner-content-container control-box">
+            {# <em>Added: {{ contact.dateAdded|date("d/m/Y") }}</em> #}
+            <button type="button" class="textless-btn delete-btn"><i class="fa fa-times"></i></button>
+            <button type="button" class="textless-btn edit-btn"><i class="fa fa-pencil"></i></button>
+        </div>
+        <div class="primary-inner-content-container">
+            <ul class="address-list">
+            {% for address in contact.addresses %}
+                <li class="address-item">
                     <h3 class="address-title">{{ address.title }}</h3>
-                </div>
-                <div class="col-md-10">
-                    <address>
+                    <address class="address">
                         <span>{{ address.lineOne }}</span>
                         {% if address.lineTwo %}<span>{{ address.lineTwo }}</span>{% endif %}
                         <span>{{ address.city }}</span>
                         <span>{{ address.county }}</span>
                         <span>{{ address.postCode }}</span>
                     </address>
-                </div>
-            </div>
-        {% endfor %}
+                    <div class="address-controls">
+                        <button type="button" class="textless-btn delete-btn"><i class="fa fa-times"></i></button>
+                        <button type="button" class="textless-btn edit-btn"><i class="fa fa-pencil"></i></button>
+                    </div>
+                </li>
+            {% else %}
+                <li><p class="no-results">You have no addresses for this contact. <a href="">Why not add one?</a></p></li>
+            {% endfor %}
+            </ul>
+        </div>
     </div>
 {% endblock %}

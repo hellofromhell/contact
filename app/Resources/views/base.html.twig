@@ -7,19 +7,22 @@
             {% stylesheets
                 'assets/bootstrap/dist/css/bootstrap.min.css'
                 'assets/css/styles.css'
+                'assets/css/nav.css'
             %}
             <link rel="stylesheet" href="{{ asset_url }}">
             {% endstylesheets %}
             <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+            <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
         {% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
-        <div class="container">
-            <header>Nav bar</header>
+        {% include '::partial/header.html.twig' %}
+        <div class="container">{% block breadcrumb %}{% endblock %}</div>
+        <div class="container primary-content-container">
             {% block body %}{% endblock %}
-            <footer>Footer</footer>
         </div>
+        {% include '::partial/footer.html.twig' %}
         {% block footjavascripts %}
             {% javascripts
                 'assets/jquery/dist/jquery.min.js'
