@@ -60,7 +60,7 @@ class ContactAddress implements ContactAddressInterface
      */
     public function setLineOne($lineOne)
     {
-        $this->lineOne = $LineOne;
+        $this->lineOne = $lineOne;
 
         return $this;
     }
@@ -98,7 +98,7 @@ class ContactAddress implements ContactAddressInterface
      */
     public function setLineTwo($lineTwo)
     {
-        $this->lineTwo = $LineTwo;
+        $this->lineTwo = $lineTwo;
 
         return $this;
     }

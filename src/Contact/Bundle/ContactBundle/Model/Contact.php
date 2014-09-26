@@ -128,6 +128,21 @@ class Contact implements ContactInterface
     }
 
     /**
+     * Get full name.
+     *
+     * @return string 
+     */
+    public function getFullName($quotes)
+    {
+        if ($middle = $this->getMiddleNames()) {
+            if ($quotes) {
+                $middle = '&lsquo;' . $middle . '&rsquo;';
+            }
+        }
+        return implode(' ', array($this->getFirstName(), $middle, $this->getSurname()));
+    }
+
+    /**
      * Set dateAdded
      *
      * @param \DateTime $dateAdded

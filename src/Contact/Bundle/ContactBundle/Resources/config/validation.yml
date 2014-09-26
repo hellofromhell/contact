@@ -1,0 +1,16 @@
+Contact\Bundle\ContactBundle\Entity\Contact:
+    properties:
+        firstName:
+            - NotBlank: ~
+            - Length:
+                min: 2
+                max: 30
+                minMessage: "The first name must be at least {{ limit }} letters. Just a little more please!"
+                maxMessage: "Woah there! Shorten the first name a little (the max is {{ limit }} characters long)."
+        surname:
+            - NotBlank: ~
+            - Length:
+                min: 2
+                max: 30
+                minMessage: "The surname must be at least {{ limit }} letters long. Just a few more please!"
+                maxMessage: "Woah there! Shorten your friend's surname a little (the max is {{ limit }} characters long)."
