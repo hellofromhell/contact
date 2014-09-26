@@ -1,0 +1,9 @@
+parameters:
+   contact_notification.notification.class: Contact\Bundle\NotificationBundle\Controller\NotificationController
+
+services:
+   contact_notification.notify:
+       class: %contact_notification.notification.class%
+       arguments:
+            session: @session
+       # arguments: [@service_id, "plain_value", %parameter%]

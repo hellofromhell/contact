@@ -16,8 +16,13 @@ class ContactController extends Controller
             ->getRepository('ContactContactBundle:Contact')
             ->findAllOrderByFavourite();
 
+        $notify = $this->get('contact_notification.notify');
+        $notify->add('success', array('type' => 'instant', 'message' => 'It worked!'));
+        // die(var_dump($notify));
+
         return $this->render('ContactContactBundle:Contact:index.html.twig', array(
-            'contacts' => $contacts
+            'contacts' => $contacts,
+            'notifications' => $notify->get('success'),
         ));
     }
 

@@ -3,6 +3,9 @@
 {% block title %}{{ parent()}} - all contacts{% endblock %}
 
 {% block body %}
+    {% for notification in notifications %}
+        <p>{{ notification.message }}</p>
+    {% endfor %}
     <h1>Your contacts</h1>
     <div class="primary-inner-content-container">
         {% for flash in app.session.flashbag.all %}
