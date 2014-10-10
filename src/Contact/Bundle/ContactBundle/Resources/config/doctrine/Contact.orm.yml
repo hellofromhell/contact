@@ -1,7 +1,7 @@
 Contact\Bundle\ContactBundle\Entity\Contact:
     type: entity
     table: contact
-    # repositoryClass: Contact\Bundle\ContactBundle\Repository\Contact
+    repositoryClass: Contact\Bundle\ContactBundle\Repository\Contact
     id:
         id:
             type: integer

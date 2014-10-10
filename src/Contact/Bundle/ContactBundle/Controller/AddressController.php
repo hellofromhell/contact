@@ -25,12 +25,43 @@ class AddressController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($address);
             $em->flush();
+
+            return $this->redirect($this->generateUrl('contact_contact_show', array('id' => $id)));
         }
 
         return $this->render('ContactContactBundle:Contact:addAddress.html.twig', array(
             'form'      => $form->createView(),
             'contact'   => $contact,
-            'created'   => $form->isValid()
+            'address'   => $address,
+        ));
+    }
+
+    public function editAction($contactId, $addressId, Request $request)
+    {
+        $contact = $this->getDoctrine()
+            ->getRepository('ContactContactBundle:Contact')
+            ->find($contactId);
+
+        $address = $this->getDoctrine()
+            ->getRepository('ContactContactBundle:ContactAddress')
+            ->find($addressId);
+
+        $form = $this->createForm(new AddressType(), $address);
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($address);
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('contact_contact_show', array('id' => $contactId)));
+        }
+
+        return $this->render('ContactContactBundle:Contact:editAddress.html.twig', array(
+            'form'      => $form->createView(),
+            'contact'   => $contact,
+            'address'   => $address,
         ));
     }
 
@@ -60,21 +91,4 @@ class AddressController extends Controller
             'contact' => $contact
         ));
     }
-
-    // public function showAction($id)
-    // {
-    //     $contact = $this->getDoctrine()
-    //         ->getRepository('ContactContactBundle:Contact')
-    //         ->find($id);
-
-    //     if (!$contact) {
-    //         throw $this->createNotFoundException(
-    //             'Contact not found for id '.$id
-    //         );
-    //     }
-
-    //     return $this->render('ContactContactBundle:Contact:contact.html.twig', array(
-    //         'contact' => $contact
-    //     ));
-    // }
 }

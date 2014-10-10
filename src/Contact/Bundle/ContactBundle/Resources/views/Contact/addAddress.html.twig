@@ -17,29 +17,15 @@
 {% endblock %}
 
 {% block breadcrumb %}
-    <a href="{{ path('contact_contact_show', { 'id': contact.id }) }}"><span class="back-link"><i class="fa fa-angle-left"></i> back to contact</span></a>
+    <a href="{{ path('contact_contact_show', { 'id': contact.id }) }}"><span class="back-link"><i class="fa fa-angle-left"></i> go back to contact</span></a>
 {% endblock %}
 
 {% block body %}
     <h1>Add a new address for {{ contact.fullName(true)|raw }}</h1>
     <div class="primary-inner-content-container">
         <div class="create-contact-wrapper">
-            {% if created %}
-                <div class="created-msg">Address added!</div>
-            {% else %}
-                {{ form_start(form, { 'attr': {'role': 'form'} }) }}
-                    {{ form_errors(form) }}
-                    {{ form_row(form.title) }}
-                    {{ form_row(form.lineOne) }}
-                    {{ form_row(form.lineTwo) }}
-                    {{ form_row(form.county) }}
-                    {{ form_row(form.city) }}
-                    {{ form_row(form.postCode) }}
-
-                    {{ form_row(form.add) }}
-                {{ form_end(form) }}
-            {% endif %}
-
+            {{ form_start(form, { 'attr': {'role': 'form'} }) }}
+            {{ form_end(form) }}
         </div>
     </div>
 {% endblock %}

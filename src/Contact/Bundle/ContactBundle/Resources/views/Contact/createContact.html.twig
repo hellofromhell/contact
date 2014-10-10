@@ -17,26 +17,15 @@
 {% endblock %}
 
 {% block breadcrumb %}
-    <a href="{{ path('contact_contact_homepage') }}"><span class="back-link"><i class="fa fa-angle-left"></i> back to contact list</span></a>
+    <a href="{{ path('contact_contact_homepage') }}"><span class="back-link"><i class="fa fa-angle-left"></i> go back to contact list</span></a>
 {% endblock %}
 
 {% block body %}
     <h1>Add a new contact</h1>
     <div class="primary-inner-content-container">
         <div class="create-contact-wrapper">
-            {% if created %}
-                <div class="created-msg">Created contact!</div> {# Probably just redirect to the new contact page and show a success notification #}
-            {% else %}
-                {{ form_start(form, { 'attr': {'role': 'form'} }) }}
-                    {{ form_errors(form) }}
-                    {{ form_row(form.firstName) }}
-                    {{ form_row(form.middleNames) }}
-                    {{ form_row(form.surname) }}
-
-                    {{ form_row(form.add) }}
-                {{ form_end(form) }}
-            {% endif %}
-
+            {{ form_start(form, { 'attr': {'role': 'form'} }) }}
+            {{ form_end(form) }}
         </div>
     </div>
 {% endblock %}

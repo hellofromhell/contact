@@ -9,12 +9,19 @@ contact_contact_show:
 contact_contact_create:
     path:     /contact/new
     defaults: { _controller: ContactContactBundle:Contact:create }
-contact_contact_create_contact_success:
-    path:     /contact/new/success
-    defaults: { _controller: ContactContactBundle:Contact:success }
 contact_contact_delete:
     path:     /contact/{id}/delete
     defaults: { _controller: ContactContactBundle:Contact:delete }
+    requirements:
+        id: \d+
+contact_contact_edit:
+    path:     /contact/{id}/edit
+    defaults: { _controller: ContactContactBundle:Contact:edit }
+    requirements:
+        id: \d+
+contact_contact_toggle_favourite:
+    path:     /contact/{id}/favourite/toggle
+    defaults: { _controller: ContactContactBundle:Contact:toggleFavourite }
     requirements:
         id: \d+
 #address
@@ -23,6 +30,12 @@ contact_contact_add_address:
     defaults: { _controller: ContactContactBundle:Address:add }
     requirements:
         id: \d+
+contact_contact_edit_address:
+    path:     /contact/{contactId}/edit/address/{addressId}
+    defaults: { _controller: ContactContactBundle:Address:edit }
+    requirements:
+        contactId: \d+
+        addressId: \d+
 contact_contact_delete_address:
     path:     /address/{id}/delete
     defaults: { _controller: ContactContactBundle:Address:delete }

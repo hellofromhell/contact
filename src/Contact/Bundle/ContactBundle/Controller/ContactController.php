@@ -4,6 +4,7 @@ namespace Contact\Bundle\ContactBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Contact\Bundle\ContactBundle\Entity\Contact;
 use Contact\Bundle\ContactBundle\Form\Types\ContactType;
 
@@ -13,13 +14,12 @@ class ContactController extends Controller
     {
         $contacts = $this->getDoctrine()
             ->getRepository('ContactContactBundle:Contact')
-            ->findAll();
+            ->findAllOrderByFavourite();
 
         return $this->render('ContactContactBundle:Contact:index.html.twig', array(
             'contacts' => $contacts
         ));
     }
-
 
     public function createAction(Request $request)
     {
@@ -33,12 +33,35 @@ class ContactController extends Controller
             $em->persist($contact);
             $em->flush();
 
-            // return $this->redirect($this->generateUrl('contact_contact_create_contact_success'));
+            return $this->redirect($this->generateUrl('contact_contact_show', array('id' => $id)));
         }
 
         return $this->render('ContactContactBundle:Contact:createContact.html.twig', array(
             'form'      => $form->createView(),
-            'created'   => $form->isValid()
+        ));
+    }
+
+    public function editAction($id, Request $request)
+    {
+        $contact = $this->getDoctrine()
+            ->getRepository('ContactContactBundle:Contact')
+            ->find($id);
+
+        $form = $this->createForm(new ContactType(), $contact);
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($contact);
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('contact_contact_show', array('id' => $id)));
+        }
+
+        return $this->render('ContactContactBundle:Contact:editContact.html.twig', array(
+            'form'      => $form->createView(),
+            'contact'   => $contact,
         ));
     }
 
@@ -76,5 +99,32 @@ class ContactController extends Controller
         $em->flush();
 
         return $this->redirect($this->generateUrl('contact_contact_homepage'));
+    }
+
+    public function toggleFavouriteAction($id, Request $request)
+    {
+        $contact = $this->getDoctrine()
+            ->getRepository('ContactContactBundle:Contact')
+            ->find($id);
+
+        if (!$contact) {
+            throw $this->createNotFoundException(
+                'Contact not found for id '.$id
+            );
+        }
+
+        $contact->setFavourite(!$contact->isFavourite());
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($contact);
+        $em->flush();
+
+        $this->get('session')->getFlashBag()->add('notice', 'Toggled favourite for '. $contact->getFirstName() . '!');
+
+
+        $url = $request->headers->get("referer");
+        return new RedirectResponse($url, '307');
+
+        // return $this->redirect($this->generateUrl('contact_contact_homepage'));
     }
 }
