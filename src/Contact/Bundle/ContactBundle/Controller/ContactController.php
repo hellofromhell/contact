@@ -69,7 +69,7 @@ class ContactController extends Controller
             ));
 
             return $this->redirect($this->generateUrl('contact_contact_show', array('id' => $id)));
-        } else {
+        } elseif ($form->getErrors()) {
             $notify = $this->get('contact.notify');
             $notify->add('error', array(
                 'type' => 'flash',
