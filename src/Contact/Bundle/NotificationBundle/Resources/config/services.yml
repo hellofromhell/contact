@@ -2,8 +2,12 @@ parameters:
    contact_notification.notification.class: Contact\Bundle\NotificationBundle\Controller\NotificationController
 
 services:
-   contact_notification.notify:
+    contact.notify:
        class: %contact_notification.notification.class%
        arguments:
             session: @session
-       # arguments: [@service_id, "plain_value", %parameter%]
+    contact.twig.notification_extension:
+        class: Contact\Bundle\NotificationBundle\Twig\NotificationExtension
+        arguments: [@service_container]
+        tags:
+            - { name: twig.extension }

@@ -19,6 +19,7 @@
     <body>
         {% include '::partial/header.html.twig' %}
         <div class="container">{% block breadcrumb %}{% endblock %}</div>
+            {{ show_notifications() }}
         <div class="container primary-content-container">
             {% block body %}{% endblock %}
         </div>
