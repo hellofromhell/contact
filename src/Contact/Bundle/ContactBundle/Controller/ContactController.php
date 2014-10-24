@@ -16,13 +16,6 @@ class ContactController extends Controller
             ->getRepository('ContactContactBundle:Contact')
             ->findAllOrderByFavourite();
 
-        $notify = $this->get('contact.notify');
-        $notify->add('success', array(
-            'type' => 'flash',
-            'title' => 'Success!',
-            'message' => 'It worked yay!',
-        ));
-
         return $this->render('ContactContactBundle:Contact:index.html.twig', array(
             'contacts' => $contacts,
         ));
@@ -32,7 +25,6 @@ class ContactController extends Controller
     {
         $contact = new Contact();
         $form = $this->createForm(new ContactType(), $contact);
-
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -40,7 +32,14 @@ class ContactController extends Controller
             $em->persist($contact);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('contact_contact_show', array('id' => $id)));
+            $notify = $this->get('contact.notify');
+            $notify->add('success', array(
+                'type' => 'flash',
+                'title' => 'Success!',
+                'message' => 'You successfully added ' . $contact->getFirstName() . ' to your contact list!',
+            ));
+
+            return $this->redirect($this->generateUrl('contact_contact_show', array('id' => $contact->getId())));
         }
 
         return $this->render('ContactContactBundle:Contact:createContact.html.twig', array(
@@ -55,7 +54,6 @@ class ContactController extends Controller
             ->find($id);
 
         $form = $this->createForm(new ContactType(), $contact);
-
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -63,7 +61,21 @@ class ContactController extends Controller
             $em->persist($contact);
             $em->flush();
 
+            $notify = $this->get('contact.notify');
+            $notify->add('success', array(
+                'type' => 'flash',
+                'title' => 'Success!',
+                'message' => 'You successfully edited ' . $contact->getFirstName() . '.',
+            ));
+
             return $this->redirect($this->generateUrl('contact_contact_show', array('id' => $id)));
+        } else {
+            $notify = $this->get('contact.notify');
+            $notify->add('error', array(
+                'type' => 'flash',
+                'title' => 'Oh no!',
+                'message' => 'You\'ve entered some incorrect details, take a look below to see what\'s wrong.',
+            ));
         }
 
         return $this->render('ContactContactBundle:Contact:editContact.html.twig', array(
@@ -105,6 +117,13 @@ class ContactController extends Controller
         $em->remove($contact);
         $em->flush();
 
+        $notify = $this->get('contact.notify');
+        $notify->add('success', array(
+            'type' => 'flash',
+            'title' => 'Success!',
+            'message' => 'You successfully removed ' . $contact->getFirstName() . ' from your contact list.',
+        ));
+
         return $this->redirect($this->generateUrl('contact_contact_homepage'));
     }
 
@@ -120,14 +139,22 @@ class ContactController extends Controller
             );
         }
 
+        $message = $contact->isFavourite()
+            ? 'You successfully removed ' . $contact->getFirstName() . ' from your favourites.'
+            : 'You successfully added ' . $contact->getFirstName() . ' to your favourites!';
+
         $contact->setFavourite(!$contact->isFavourite());
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($contact);
         $em->flush();
 
-        $this->get('session')->getFlashBag()->add('notice', 'Toggled favourite for '. $contact->getFirstName() . '!');
-
+        $notify = $this->get('contact.notify');
+        $notify->add('success', array(
+            'type' => 'flash',
+            'title' => 'Success!',
+            'message' => $message,
+        ));
 
         $url = $request->headers->get("referer");
         return new RedirectResponse($url, '307');

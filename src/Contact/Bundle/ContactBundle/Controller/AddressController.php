@@ -26,6 +26,13 @@ class AddressController extends Controller
             $em->persist($address);
             $em->flush();
 
+            $notify = $this->get('contact.notify');
+            $notify->add('success', array(
+                'type' => 'flash',
+                'title' => 'Success!',
+                'message' => "You successfully added address '" . $address->getTitle() . "' for " . $contact->getFirstName() . "!",
+            ));
+
             return $this->redirect($this->generateUrl('contact_contact_show', array('id' => $id)));
         }
 
@@ -55,6 +62,13 @@ class AddressController extends Controller
             $em->persist($address);
             $em->flush();
 
+            $notify = $this->get('contact.notify');
+            $notify->add('success', array(
+                'type' => 'flash',
+                'title' => 'Success!',
+                'message' => 'You successfully made changes to ' . $address->getTitle() . '.',
+            ));
+
             return $this->redirect($this->generateUrl('contact_contact_show', array('id' => $contactId)));
         }
 
@@ -82,6 +96,13 @@ class AddressController extends Controller
         $em = $this->getDoctrine()->getManager();
         $em->remove($address);
         $em->flush();
+
+        $notify = $this->get('contact.notify');
+        $notify->add('success', array(
+            'type' => 'flash',
+            'title' => 'Success!',
+            'message' => 'You successfully removed ' . $address->getTitle() . '.',
+        ));
 
         if (!$contact) {
             return $this->redirect($this->generateUrl('contact_contact_homepage'));

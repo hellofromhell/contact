@@ -36,10 +36,9 @@ class NotificationExtension extends \Twig_Extension
     /**
      * Render all notifications
      * 
-     * @param  boolean $container
      * @return mixed
      */
-    public function renderAll($container = false)
+    public function renderAll()
     {
         $allNotifications = $this->notify->all();
 
@@ -47,7 +46,9 @@ class NotificationExtension extends \Twig_Extension
             return $this->container->get('templating')
                 ->render(
                     'ContactNotificationBundle:Notification:notifications.html.twig',
-                    compact('allNotifications', 'container')
+                    array(
+                        'allNotifications' => $allNotifications
+                    )
                 );
         }
 
@@ -58,10 +59,9 @@ class NotificationExtension extends \Twig_Extension
      * Render a single notification
      * 
      * @param  string  $name Notification name.
-     * @param  $container
      * @return mixed
      */
-    public function render($name, $container = false)
+    public function render($name)
     {
         if (!$this->notify->has($name)) {
             return false;
@@ -73,7 +73,9 @@ class NotificationExtension extends \Twig_Extension
             return $this->container->get('templating')
                 ->render(
                     'ContactNotificationBundle:Notification:notification.html.twig',
-                    compact('notifications', 'container')
+                    array(
+                        'notifications' => $notifications
+                    )
                 );
         }
 
