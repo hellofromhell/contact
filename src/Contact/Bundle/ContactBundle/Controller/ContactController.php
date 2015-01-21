@@ -69,7 +69,7 @@ class ContactController extends Controller
             ));
 
             return $this->redirect($this->generateUrl('contact_contact_show', array('id' => $id)));
-        } elseif ($form->getErrors()) {
+        } elseif ($form->getErrors()) { //don't think this works, always shows?
             $notify = $this->get('contact.notify');
             $notify->add('error', array(
                 'type' => 'flash',
